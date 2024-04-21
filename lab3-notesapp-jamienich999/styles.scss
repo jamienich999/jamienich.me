@@ -1,0 +1,40 @@
+$fontcolor:  rgb(10%, 10%, 10%);
+$backgroundcolor: rgb(98%, 98%, 98%);
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: $fontcolor;
+    background-color: $backgroundcolor;
+    margin: 50px;
+}
+
+#options-bar{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    
+    li {
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    li:hover,
+    li.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+}
+
+.note {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: #ffd700;
+    border: 2px solid #f7d32f;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
