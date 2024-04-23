@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 
-function Note({ id, mode }) {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+function Note({ id, onClick, onMouseDown, onSaveEdits, mode, style }) {
+    const [editMode, setEditMode] = useState(false);
+    const [title, setTitle] = useState('New Note');
+    const [content, setContent] = useState('Insert Content Here!');
+
+    const handleNoteClick = () => {
+        if(mode === 'Edit'){
+            setEditMode(true);
+        }
+        onClick(id);
+    };
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -13,16 +22,15 @@ function Note({ id, mode }) {
     };
 
     const handleSave = () => {
-        // Save or update the note (implementation depends on your application)
-    };
-
-    const handleMouseDown = (e) => {
-        handleMouseDown(id, e);
+        if (editMode && mode === 'Edit') {
+            onSaveEdits(id, title, content);
+            setEditMode(false); // Set editMode to false after onSaveEdits
+        }
     }
 
     return (
-        <div className="note" id={id}>
-            {mode === 'Edit' ? (
+        <div className="note" id={id} onClick={handleNoteClick} style={style} onMouseDown={() => onMouseDown(id)}>
+            {editMode && mode == 'Edit' ? (
                 <>
                     <input
                         type="text"
@@ -31,15 +39,22 @@ function Note({ id, mode }) {
                         onChange={handleTitleChange}
                     />
                     <textarea
+                        type = "text"
                         placeholder="Content"
                         value={content}
                         onChange={handleContentChange}
                     />
+                    <button onClick={(e) => {
+                        e.stopPropagation();
+                        handleSave();
+                    }}>
+                        Save
+                    </button>
                 </>
             ) : (
                 <>
-                    <h2>Title: {title}</h2>
-                    <p>Content: {content}</p>
+                    <h2>{title}</h2>
+                    <ReactMarkdown>{content}</ReactMarkdown>
                 </>
             )}
         </div>
