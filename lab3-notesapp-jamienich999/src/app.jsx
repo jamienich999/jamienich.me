@@ -17,6 +17,7 @@ export default function MyApp() {
         // });
 
         // return () => unsubscribe();
+        //figure smth out
     }, []);
 
     const [mode, setMode] = useState('Move');
